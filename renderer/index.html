@@ -22,17 +22,17 @@
 </div>
 <div id="sidebar">
   <div id="sidebartabs">
-    <button data-pane="composer" class="active">Composer</button>
+    <button data-pane="chat" class="active">Chat</button>
     <button data-pane="workflows">Workflows</button>
     <button data-pane="usage">Usage</button>
     <button data-pane="mcp">MCP</button>
   </div>
-  <div id="pane-composer" class="pane active">
-    <p class="hint">Ask the agent to do something in the current tab. Watch it work.</p>
-    <textarea id="task" rows="4" placeholder="e.g. Summarize the top story on this page"></textarea>
-    <button id="runtask">Run agent</button>
-    <div id="taskstatus"></div>
-    <div id="answer"></div>
+  <div id="pane-chat" class="pane active">
+    <div id="chatlog"></div>
+    <div id="chatinputrow">
+      <input id="chatinput" placeholder="Ask the browser agent…">
+      <button id="chatsend">Send</button>
+    </div>
   </div>
   <div id="pane-workflows" class="pane">
     <div class="row"><button id="wrefresh">Refresh</button></div>

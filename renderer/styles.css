@@ -34,3 +34,19 @@ html, body { margin: 0; height: 100%; font-family: -apple-system, "Segoe UI", In
 .row { display: flex; gap: 6px; }
 .row input { flex: 1; background: #101214; border: 1px solid #333; color: #eee; border-radius: 8px; padding: 8px; font-size: 12px; }
 #wstatus { font-size: 12px; color: #999; white-space: pre-wrap; }
+/* chat */
+#pane-chat { flex: 1; min-height: 0; }
+#chatlog { flex: 1; min-height: 200px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; padding: 4px 2px; }
+.msg { font-size: 13px; border-radius: 10px; padding: 8px 10px; white-space: pre-wrap; max-width: 95%; }
+.msg.user { align-self: flex-end; background: #5b8def; color: #fff; }
+.msg.agent { align-self: flex-start; background: #101214; border: 1px solid #333; color: #eee; }
+.msg.status { align-self: flex-start; background: none; color: #e0a63c; font-size: 12px; padding: 2px 4px; }
+.msg.question { align-self: stretch; background: #2a2415; border: 1px solid #e0a63c; color: #ffe1a8; }
+.msg.question.answered { opacity: 0.6; }
+.qrow { display: flex; gap: 6px; margin-top: 8px; }
+.qrow input { flex: 1; background: #101214; border: 1px solid #555; color: #eee; border-radius: 8px; padding: 8px; font-size: 12px; }
+.qrow button { background: #e0a63c; color: #111; border: none; border-radius: 8px; padding: 8px 12px; cursor: pointer; font-size: 12px; }
+#chatinputrow { display: flex; gap: 6px; padding-top: 8px; }
+#chatinput { flex: 1; background: #101214; border: 1px solid #333; color: #eee; border-radius: 8px; padding: 8px; font-size: 13px; }
+#chatsend { background: #5b8def; color: #fff; border: none; border-radius: 8px; padding: 8px 14px; cursor: pointer; font-size: 13px; }
+#chatsend:disabled { background: #444; cursor: wait; }

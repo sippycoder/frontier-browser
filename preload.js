@@ -20,4 +20,6 @@ contextBridge.exposeInMainWorld('frontier', {
   usageReport: () => ipcRenderer.invoke('usage-report'),
   distillReport: () => ipcRenderer.invoke('distill-report'),
   getMcpConfig: () => ipcRenderer.invoke('mcp-config'),
+  chatStart: () => ipcRenderer.invoke('chat-start'),
+  chatAnswer: (sid, text) => ipcRenderer.invoke('chat-answer', sid, text),
 });

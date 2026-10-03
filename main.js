@@ -225,6 +225,27 @@ ipcMain.handle('mcp-config', () => ({
   engineDir: PROJECT_DIR,
   python: VENV_PY,
 }));
+ipcMain.handle('chat-start', async () => {
+  try {
+    const r = await fetch(`http://127.0.0.1:${SIDECAR_PORT}/chat-sessions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ cdp_url: CDP_URL }),
+    });
+    const j = await r.json();
+    return { session_id: j.session_id, sidecar_url: `http://127.0.0.1:${SIDECAR_PORT}`, error: j.error };
+  } catch (e) {
+    return { error: String(e) };
+  }
+});
+ipcMain.handle('chat-answer', async (e, sid, text) => {
+  await fetch(`http://127.0.0.1:${SIDECAR_PORT}/chat-sessions/${sid}/answer`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ text }),
+  });
+  return true;
+});
 
 app.whenReady().then(() => { createWindow(); startSidecar(); });
 app.on('window-all-closed', () => { if (sidecar) sidecar.kill(); app.quit(); });
