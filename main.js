@@ -249,3 +249,4 @@ ipcMain.handle('chat-answer', async (e, sid, text) => {
 
 app.whenReady().then(() => { createWindow(); startSidecar(); });
 app.on('window-all-closed', () => { if (sidecar) sidecar.kill(); app.quit(); });
+app.on('will-quit', () => { if (sidecar) sidecar.kill(); });  // macOS Cmd+Q path
