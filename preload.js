@@ -3,7 +3,7 @@ const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('frontier', {
   onTabs: cb => ipcRenderer.on('tabs', (e, data) => cb(data)),
-  onSidecar: cb => ipcRenderer.on('sidecar-status', (e, ok) => cb(ok)),
+  onSidecar: cb => ipcRenderer.on('sidecar-status', (e, ok, msg) => cb(ok, msg)),
   newTab: url => ipcRenderer.invoke('tabs-new', url),
   closeTab: id => ipcRenderer.invoke('tabs-close', id),
   switchTab: id => ipcRenderer.invoke('tabs-switch', id),

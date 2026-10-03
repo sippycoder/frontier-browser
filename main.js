@@ -10,6 +10,7 @@ const { app, BrowserWindow, BrowserView, ipcMain } = require('electron');
 const { spawn, execFile } = require('child_process');
 const path = require('path');
 const os = require('os');
+const fs = require('fs');
 const http = require('http');
 
 const CDP_PORT = 9333;
@@ -47,10 +48,21 @@ let sidebarOpen = true;
 
 /* ---------------- sidecar ---------------- */
 
+function sidecarMissing() {
+  const msg = `Engine not found at ${VENV_PY}\nCreate it with:\n  cd ${PROJECT_DIR}\n  python3 -m venv .venv\n  .venv/bin/pip install -e .\n  .venv/bin/playwright install chromium`;
+  console.log('[sidecar] ' + msg.split('\n')[0]);
+  win && win.webContents.send('sidecar-status', false, msg);
+}
+
 function startSidecar() {
+  if (!fs.existsSync(VENV_PY)) { sidecarMissing(); return; }
   sidecar = spawn(VENV_PY, ['-m', 'agentic_browser.cli', 'serve', '--port', String(SIDECAR_PORT)], {
     cwd: PROJECT_DIR,
     env: { ...process.env },
+  });
+  sidecar.on('error', err => {
+    console.log('[sidecar] failed to start:', err.message);
+    sidecarMissing();
   });
   sidecar.stdout.on('data', d => console.log('[sidecar]', String(d).trim()));
   sidecar.stderr.on('data', d => console.log('[sidecar:err]', String(d).trim()));
@@ -67,6 +79,10 @@ function startSidecar() {
 
 function pyCli(args) {
   return new Promise(resolve => {
+    if (!fs.existsSync(VENV_PY)) {
+      resolve('(engine venv not found — create it per the README setup steps)');
+      return;
+    }
     execFile(VENV_PY, ['-m', 'agentic_browser.cli', ...args],
       { cwd: PROJECT_DIR, env: { ...process.env }, timeout: 30000 },
       (err, stdout) => resolve(err ? `(error: ${err.message})` : stdout));

@@ -64,7 +64,10 @@ $('runtask').onclick = async () => {
   }
   $('runtask').disabled = false;
 };
-F.onSidecar(ok => $('agentdot').classList.toggle('ok', ok));
+F.onSidecar((ok, msg) => {
+  $('agentdot').classList.toggle('ok', ok);
+  if (!ok && msg) $('taskstatus').textContent = msg;
+});
 
 /* workflows */
 async function refreshWorkflows() {
