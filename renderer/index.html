@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Frontier</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="chrome">
+  <div id="tabstrip">
+    <div id="tabs"></div>
+    <button id="newtab" title="New tab">+</button>
+  </div>
+  <div id="toolbar">
+    <button id="back" title="Back">←</button>
+    <button id="fwd" title="Forward">→</button>
+    <button id="reload" title="Reload">⟳</button>
+    <input id="omnibox" placeholder="Search or enter address" spellcheck="false">
+    <button id="sidebartoggle" title="Toggle sidebar">☰</button>
+    <span id="agentdot" class="dot" title="Agent sidecar"></span>
+  </div>
+</div>
+<div id="sidebar">
+  <div id="sidebartabs">
+    <button data-pane="composer" class="active">Composer</button>
+    <button data-pane="workflows">Workflows</button>
+    <button data-pane="usage">Usage</button>
+  </div>
+  <div id="pane-composer" class="pane active">
+    <p class="hint">Ask the agent to do something in the current tab. Watch it work.</p>
+    <textarea id="task" rows="4" placeholder="e.g. Summarize the top story on this page"></textarea>
+    <button id="runtask">Run agent</button>
+    <div id="taskstatus"></div>
+    <div id="answer"></div>
+  </div>
+  <div id="pane-workflows" class="pane">
+    <div class="row"><button id="wrefresh">Refresh</button></div>
+    <h4>Installed workflows</h4>
+    <pre id="wlist" class="out"></pre>
+    <div class="row">
+      <input id="wrun" placeholder="workflow name">
+      <button id="wrunbtn">Run now</button>
+    </div>
+    <h4>Templates</h4>
+    <pre id="tlist" class="out"></pre>
+    <div class="row">
+      <input id="tinstall" placeholder="template name">
+      <button id="tinstallbtn">Install</button>
+    </div>
+    <div id="wstatus"></div>
+  </div>
+  <div id="pane-usage" class="pane">
+    <div class="row"><button id="urefresh">Refresh</button></div>
+    <pre id="uout" class="out"></pre>
+    <h4>Distillation</h4>
+    <pre id="dout" class="out"></pre>
+  </div>
+</div>
+<script src="renderer.js"></script>
+</body>
+</html>
