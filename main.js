@@ -19,8 +19,11 @@ const SIDECAR_URL = `http://127.0.0.1:${SIDECAR_PORT}`;
 const TOP_H = 96;      // tab strip + toolbar, rendered in DOM
 const SIDEBAR_W = 380;
 
-const PROJECT_DIR = path.join(os.homedir(), 'workspace', 'agentic-browser');
+const PROJECT_DIR = process.env.FRONTIER_ENGINE_DIR
+  || path.join(os.homedir(), 'workspace', 'agentic-browser');
 const VENV_PY = path.join(PROJECT_DIR, '.venv', 'bin', 'python');
+// Sandbox egress (AGENTIC_RELAY_PROXY=1) is inherited from the environment
+// when set — never forced on, so laptops run with normal networking.
 
 app.commandLine.appendSwitch('remote-debugging-port', String(CDP_PORT));
 app.commandLine.appendSwitch('no-sandbox');
@@ -47,7 +50,7 @@ let sidebarOpen = true;
 function startSidecar() {
   sidecar = spawn(VENV_PY, ['-m', 'agentic_browser.cli', 'serve', '--port', String(SIDECAR_PORT)], {
     cwd: PROJECT_DIR,
-    env: { ...process.env, AGENTIC_RELAY_PROXY: '1' },
+    env: { ...process.env },
   });
   sidecar.stdout.on('data', d => console.log('[sidecar]', String(d).trim()));
   sidecar.stderr.on('data', d => console.log('[sidecar:err]', String(d).trim()));
@@ -65,7 +68,7 @@ function startSidecar() {
 function pyCli(args) {
   return new Promise(resolve => {
     execFile(VENV_PY, ['-m', 'agentic_browser.cli', ...args],
-      { cwd: PROJECT_DIR, env: { ...process.env, AGENTIC_RELAY_PROXY: '1' }, timeout: 30000 },
+      { cwd: PROJECT_DIR, env: { ...process.env }, timeout: 30000 },
       (err, stdout) => resolve(err ? `(error: ${err.message})` : stdout));
   });
 }
