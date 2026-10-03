@@ -219,6 +219,12 @@ ipcMain.handle('templates-list', () => pyCli(['templates', 'list']));
 ipcMain.handle('templates-install', (e, name) => pyCli(['templates', 'install', name]));
 ipcMain.handle('usage-report', () => pyCli(['usage', 'report', '--days', '7']));
 ipcMain.handle('distill-report', () => pyCli(['distill', 'report']));
+ipcMain.handle('mcp-config', () => ({
+  cdpUrl: CDP_URL,
+  cdpPort: CDP_PORT,
+  engineDir: PROJECT_DIR,
+  python: VENV_PY,
+}));
 
 app.whenReady().then(() => { createWindow(); startSidecar(); });
 app.on('window-all-closed', () => { if (sidecar) sidecar.kill(); app.quit(); });

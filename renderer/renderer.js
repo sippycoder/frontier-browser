@@ -95,5 +95,25 @@ async function refreshUsage() {
 }
 $('urefresh').onclick = refreshUsage;
 
+/* mcp */
+async function refreshMcp() {
+  const cfg = await F.getMcpConfig();
+  const snippet = {
+    mcpServers: {
+      "frontier-browser": {
+        command: cfg.python,
+        args: ["-m", "agentic_browser.cli", "mcp", "--cdp-url", cfg.cdpUrl],
+      },
+    },
+  };
+  $('mcpjson').textContent = JSON.stringify(snippet, null, 2);
+  $('mcpstatus').textContent = `CDP debugging on 127.0.0.1:${cfg.cdpPort} · engine ${cfg.engineDir}`;
+}
+$('mcpcopy').onclick = async () => {
+  await navigator.clipboard.writeText($('mcpjson').textContent);
+  $('mcpstatus').textContent = 'Copied — paste it into your main agent\'s MCP config.';
+};
+
 refreshWorkflows();
 refreshUsage();
+refreshMcp();

@@ -25,6 +25,7 @@
     <button data-pane="composer" class="active">Composer</button>
     <button data-pane="workflows">Workflows</button>
     <button data-pane="usage">Usage</button>
+    <button data-pane="mcp">MCP</button>
   </div>
   <div id="pane-composer" class="pane active">
     <p class="hint">Ask the agent to do something in the current tab. Watch it work.</p>
@@ -54,6 +55,13 @@
     <pre id="uout" class="out"></pre>
     <h4>Distillation</h4>
     <pre id="dout" class="out"></pre>
+  </div>
+  <div id="pane-mcp" class="pane">
+    <p class="hint">Let any MCP-capable main agent drive this browser's visible tabs. Paste this into its MCP config:</p>
+    <pre id="mcpjson" class="out"></pre>
+    <div class="row"><button id="mcpcopy">Copy config</button></div>
+    <div id="mcpstatus" class="hint"></div>
+    <p class="hint">Localhost only — the debugging port never leaves this machine. The agent can see and drive your open tabs; approvals and questions come back to the main agent.</p>
   </div>
 </div>
 <script src="renderer.js"></script>

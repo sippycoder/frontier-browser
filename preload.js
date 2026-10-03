@@ -19,4 +19,5 @@ contextBridge.exposeInMainWorld('frontier', {
   templatesInstall: name => ipcRenderer.invoke('templates-install', name),
   usageReport: () => ipcRenderer.invoke('usage-report'),
   distillReport: () => ipcRenderer.invoke('distill-report'),
+  getMcpConfig: () => ipcRenderer.invoke('mcp-config'),
 });
